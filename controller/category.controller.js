@@ -69,4 +69,5 @@ let deleteCategoryById = async (req,res, next) => {
     res.end();
 }
 // createTable();
-module.exports = { getAllCategories, getCategoriesById, addNewCategory , deleteCategoryById};
+let all = { getAllCategories, getCategoriesById, addNewCategory , deleteCategoryById};
+module.exports = all;
