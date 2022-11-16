@@ -1,6 +1,7 @@
 let Categories = require("./../model/category");
 let sequelizeInstance = require("./../config/db.config");
 let express = require("express");
+
 let expressApp = express();
 
 let createTable = async () => {
@@ -47,5 +48,25 @@ let getCategoriesById = async (req, res, next) => {
     res.end();
 
 };
+
+let addNewCategory = async (req,res,next) => {
+    let categoryToAdd = req.body.name;
+    await Categories.create({
+        name : categoryToAdd
+    });
+    res.status(201).send("New category added")
+    res.end();
+}
+
+let deleteCategoryById = async (req,res, next) => {
+    let id = req.params.categoryId;
+    await Categories.destroy({
+        where : {
+            categoryId : id
+        }
+    });
+    res.status(200).send("Category deleted")
+    res.end();
+}
 // createTable();
-module.exports = { getAllCategories, getCategoriesById };
+module.exports = { getAllCategories, getCategoriesById, addNewCategory , deleteCategoryById};

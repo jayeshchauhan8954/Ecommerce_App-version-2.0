@@ -2,6 +2,8 @@ const serverConfig = require("./config/server.config");
 const express = require('express');
 const router = require("./routes/index");
 const expressApp = express();
+let bodyParser = require("body-parser");
+expressApp.use(bodyParser.json());
 expressApp.use(router);
 
 expressApp.listen(serverConfig.PORT, () => {
@@ -25,5 +27,5 @@ step to create an application
 13. create a database name ecomm_db from mysql
 14. now create db.config.js in config folder and write in it
 15. now create a model folder and create category.js in it and write code
-16.
+16. .... npm i body-parser
 */
