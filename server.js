@@ -1,10 +1,13 @@
 const serverConfig = require("./config/server.config");
+let bodyParser = require("body-parser");
 const express = require('express');
 const router = require("./routes/index");
+const ErroHandler = require("./middlewares/ErrorHandler");
+
 const expressApp = express();
-let bodyParser = require("body-parser");
 expressApp.use(bodyParser.json());
 expressApp.use(router);
+expressApp.use(ErroHandler);
 
 expressApp.listen(serverConfig.PORT, () => {
     console.log("server listening at port " +  serverConfig.PORT)

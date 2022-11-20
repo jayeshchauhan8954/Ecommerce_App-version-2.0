@@ -1,3 +1,6 @@
+// I did not used this anywhere
+/* 
+
 let Products = require("./../model/products");
 let dbConnection = require("./../config/db.config");
 const { BIGINT, INTEGER } = require("sequelize");
@@ -12,51 +15,53 @@ let getAllProducts = async (req,res,next) => {
 } catch(err){
     next(err);
 }
-    // finally{
-    //     res.end();
-    // }
+    finally{
+        res.end();
+    }
 };
 
 let getProductById = async (req,res,next) => {
+try{
     let id = req.params.productId;
-    if(!id) {res.status(400).send("ID not passed")};
-    try{
+    if(!id) {res.status(400).send("ID not passed")}
     let products = await Products.findAll({
         where: {
             id : id
         }
-    });
+    })
     // res.writeHead(200, { 'Content-Type': 'application/json' });
     //  res.write(JSON.stringify(products));
      res.status(200).send(products);
 } catch(err){
     next(err);
 }
-    // finally{
-    //     res.end();
-    // }
+    finally{
+        res.end();
+    }
 };
 
 let addNewProduct = async (req,res,next) => {
+
     try {
            let productToAdd = req.body;
            await Products.create({
-            name : req.body.name,
-            price : req.body.price,
-            categoryId : req.body.categoryId
+                name : productToAdd,
+                price : productToAdd,
+                categoryId : productToAdd
             });
+
         res.status(201).send("New product added");
     } catch (err) {
         next(err);
     }
-    // finally {
-    //    res.end();
-    // } 
+    finally {
+       res.end();
+    } 
 };
 
 let deleteProductById = async (req,res, next) => {
-    let id = req.params.productId;
-    let product = await Products.findAll({id});
+    let id = req.params.id;
+    let product = await Products.findByPk(id);
     try{
     if(!product) {
         throw new Error("product not found");
@@ -70,15 +75,18 @@ let deleteProductById = async (req,res, next) => {
 } catch (err){
     next(err)
 }
-    finally{
-        res.end();
-    }
+    // finally{
+    //     res.end();
+    // }
 };
 
 let updateProductById = async (req,res,next) => {
-   
+    // if(!req.body.name) {
+    //     res.status(500).send("Please pass product name");
+    //     res.end();
+    // }
     try{
-        let id = req.params.productId;
+    let id = req.params.id;
     let productToUpdate = {
         name : req.body.name,
         price : req.body.price,
@@ -102,7 +110,7 @@ let updateProductById = async (req,res,next) => {
 let createTable = async () => {
     await dbConnection.sync({force : true});
     console.log("Product table is created");
-    insertProducts();
+    // insertProducts();
 }
 
 let insertProducts = async () => {
@@ -146,3 +154,5 @@ let insertProducts = async () => {
 
 let all = {getAllProducts,getProductById,addNewProduct, deleteProductById, updateProductById};
 module.exports = all;
+
+*/ 

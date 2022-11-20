@@ -8,8 +8,8 @@ router.get("/", (req,res,next) => {
 });
 
 // This is base route for categories "/categories"
-router.use('/categories', categoryRoutes);
+router.use('/ecomm/api/v1/categories', categoryRoutes);
 // This is base route for products "/products"
-router.use('/products', productRoutes);
+router.use('/ecomm/api/v1/products', productRoutes);
 
 module.exports = router;
