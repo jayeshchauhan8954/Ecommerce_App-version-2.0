@@ -3,14 +3,41 @@ let bodyParser = require("body-parser");
 const express = require('express');
 const router = require("./routes/index");
 const ErroHandler = require("./middlewares/ErrorHandler");
+const dbConnection = require("./config/db.config");
+const Category = require("./model/category");
+const Product = require("./model/products");
 
 const expressApp = express();
 expressApp.use(bodyParser.json());
 expressApp.use(router);
 expressApp.use(ErroHandler);
 
+Category.hasMany(Product)
+let init = async () => {
+    await dbConnection.sync({ force: true });
+    insertCategories();
+}
+
+let insertCategories = async () => {
+    await Category.bulkCreate([
+        {
+            name: "Fashion"
+        },
+        {
+            name: "Mobile"
+        },
+        {
+            name: "Electronics"
+        },
+        {
+            name: "Appliances"
+        }
+    ])
+}
+
 expressApp.listen(serverConfig.PORT, () => {
-    console.log("server listening at port " +  serverConfig.PORT)
+    console.log("server listening at port " + serverConfig.PORT)
+    init();
 });
 
 /*

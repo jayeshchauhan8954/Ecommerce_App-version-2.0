@@ -2,7 +2,7 @@ let dbConnection = require("./../config/db.config");
 let sequelize = require("sequelize")
 
 let Categories = dbConnection.define("categories", {
-    categoryId : {
+    Id: {
         primaryKey: true,
         notNull: true,
         type: sequelize.DataTypes.INTEGER,
@@ -13,8 +13,8 @@ let Categories = dbConnection.define("categories", {
         type: sequelize.DataTypes.STRING
     }
 },
-{
-    timestamps: false
-});
+    {
+        timestamps: false
+    });
 
 module.exports = Categories;

@@ -9,13 +9,7 @@ productRouter.post("/", productController.addNewProduct);
 
 productRouter.delete("/:productId", productController.deleteProductById);
 
+productRouter.post("/bulkAdd/", productController.insertProducts);
+
 productRouter.put("/:productId", productController.updateProductById);
-
-// add one for post
-
-// add one for delete
-
-// add one for put
-
-// all three with try and catch
 module.exports = productRouter;

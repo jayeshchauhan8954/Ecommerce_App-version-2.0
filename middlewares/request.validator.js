@@ -10,6 +10,7 @@ const validateReqForCategoryName = (req,res,next) => {
 };
 
 const validateReqForCategoryId = async (req, res, next) => {
+    
     let categoryId = req.params.categoryId;
     if(categoryId) {
     let category =  await Categories.findByPk(categoryId);
