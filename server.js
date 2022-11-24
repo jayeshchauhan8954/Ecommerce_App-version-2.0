@@ -6,6 +6,7 @@ const ErroHandler = require("./middlewares/ErrorHandler");
 const dbConnection = require("./config/db.config");
 const Category = require("./model/category");
 const Product = require("./model/products");
+const Roles = require("./model/Roles");
 
 const expressApp = express();
 expressApp.use(bodyParser.json());
@@ -13,10 +14,13 @@ expressApp.use(router);
 expressApp.use(ErroHandler);
 
 Category.hasMany(Product)
+
 let init = async () => {
     await dbConnection.sync({ force: true });
     insertCategories();
-}
+    insertProducts();
+    insertRoles();
+};
 
 let insertCategories = async () => {
     await Category.bulkCreate([
@@ -33,7 +37,58 @@ let insertCategories = async () => {
             name: "Appliances"
         }
     ])
-}
+};
+
+let insertProducts = async (req, res, next) => {
+    await Product.bulkCreate(
+        [
+            {
+                name: "Samsung Galaxy Note",
+                categoryId: 1,
+                price: 18000
+            },
+            {
+                name: "Iphone 13",
+                categoryId: 1,
+                price: 60000
+            },
+            {
+                name: "Sony bravia",
+                categoryId: 2,
+                price: 40000
+            },
+            {
+                name: "Boat Rugged",
+                categoryId: 4,
+                price: 4000
+            },
+            {
+                name: "JBL Storm",
+                categoryId: 4,
+                price: 9000
+            },
+            {
+                name: "Vu 5",
+                categoryId: 2,
+                price: 32000
+            }
+
+        ]);
+};
+
+let insertRoles = async () => {
+    await Roles.bulkCreate([
+        {
+            id: 1,
+            name: "user",
+        },
+        {
+            id: 2,
+            name: "admin",
+        },
+    ]);
+    console.log("Roles added");
+};
 
 expressApp.listen(serverConfig.PORT, () => {
     console.log("server listening at port " + serverConfig.PORT)
