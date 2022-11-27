@@ -26,6 +26,11 @@ let signup = async (req, res) => {
         res.status(200).json({
             message: "User registered successfully"
         })
+    } else {
+        await user.setRoles([1]);
+        res.status(200).json({
+            message: "Registered with user role"
+        });
     }
 };
 let signin = async (req, res) => {
@@ -33,7 +38,7 @@ let signin = async (req, res) => {
     let password = req.body.password;
     let userName = await User.findOne({
         where: {
-            username: req.body.username,
+            username: username,
         },
     });
 
@@ -67,7 +72,7 @@ let signin = async (req, res) => {
 
     res.status(200).send({
         id: userName.id,
-        username: userName.userName,
+        username: userName.username,
         email: userName.email,
         roles: authorities,
         accessToken: token,
